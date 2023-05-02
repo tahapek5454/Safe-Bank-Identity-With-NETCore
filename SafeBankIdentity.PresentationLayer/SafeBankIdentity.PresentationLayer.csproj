@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>2395e3ca-5591-4c61-94be-3d082de6822e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,11 +15,17 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.16">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SafeBankIdentity.BusinessLayer\SafeBankIdentity.BusinessLayer.csproj" />
+    <ProjectReference Include="..\SafeBankIdentity.DataAccessLayer\SafeBankIdentity.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\SafeBankIdentity.EntityLayer\SafeBankIdentity.EntityLayer.csproj" />
   </ItemGroup>
 
 </Project>
