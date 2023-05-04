@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SafeBankIdentity.DataAccessLayer.Concrete
 {
-    public class Context: IdentityDbContext
+    public class Context: IdentityDbContext<AppUser, AppRole, int>
     {
         private IConfiguration _configuration;
         public Context(IConfiguration configuration)
