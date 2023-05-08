@@ -1,7 +1,11 @@
+using FluentValidation.AspNetCore;
+using SafeBankIdentity.BusinessLayer.ValidationRules.AppUserValidationRules;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<AppUserRegisterDTOValidator>());
 
 var app = builder.Build();
 
