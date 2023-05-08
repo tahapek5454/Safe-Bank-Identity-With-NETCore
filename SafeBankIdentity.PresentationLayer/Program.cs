@@ -1,7 +1,10 @@
 using FluentValidation.AspNetCore;
 using SafeBankIdentity.BusinessLayer.ValidationRules.AppUserValidationRules;
+using SafeBankIdentity.DataAccessLayer;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDataAccessRegistration(builder.Configuration);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()

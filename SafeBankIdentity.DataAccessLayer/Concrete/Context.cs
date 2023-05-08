@@ -12,16 +12,9 @@ namespace SafeBankIdentity.DataAccessLayer.Concrete
 {
     public class Context: IdentityDbContext<AppUser, AppRole, int>
     {
-        private IConfiguration _configuration;
-        public Context(IConfiguration configuration)
-        {
-            _configuration= configuration;
-        }
+
+        public Context(DbContextOptions options) : base(options) { }
         
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(_configuration["ConnectionStrings:PostgreSQL"]);
-        }
 
         public DbSet<CustomerAccount> CustomerAccounts { get; set; }
         public DbSet<CustomerAccountProcess> CustomerAccountProcesses { get; set; }
