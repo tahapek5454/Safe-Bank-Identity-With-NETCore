@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SafeBankIdentity.BusinessLayer.Abstract;
+using SafeBankIdentity.DataAccessLayer.Concrete;
 using SafeBankIdentity.DtoLayer.Dtos.AppUserDtos;
 using SafeBankIdentity.EntityLayer.Concrete;
+using SafeBankIdentity.PresentationLayer.Filters;
 
 namespace SafeBankIdentity.PresentationLayer.Controllers
 {
@@ -16,15 +19,24 @@ namespace SafeBankIdentity.PresentationLayer.Controllers
             _userRegisterService = userRegisterService;
         }
 
-        [HttpPost]
+		[HttpGet]
+		public IActionResult Index()
+		{
+			return View();
+		}
+
+		[HttpPost]
         public async Task<IActionResult> Index(AppUserRegisterDto appUserRegisterDto)
         {
-            bool result =await _userRegisterService.RegisterAsync(appUserRegisterDto);
+            var result =await _userRegisterService.RegisterAsync(appUserRegisterDto);
 
-            if(result)
+            if(result.Succeeded && ModelState.IsValid)
                 return RedirectToAction("Index", "ConfirmMail");
 
-            return View();
+
+            ValidationModelStateFilter.GetErrors(ModelState, result.Errors);
+           
+			return View();
         }
     }
 }

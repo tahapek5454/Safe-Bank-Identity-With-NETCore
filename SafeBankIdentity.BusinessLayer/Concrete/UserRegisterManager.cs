@@ -19,7 +19,7 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
             _userManager = userManager;
         }
 
-        public async Task<bool> RegisterAsync(AppUserRegisterDto appUserRegisterDto)
+        public async Task<IdentityResult> RegisterAsync(AppUserRegisterDto appUserRegisterDto)
         {
             AppUser appUser = new AppUser()
             {
@@ -31,7 +31,7 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
 
             IdentityResult identityResult = await _userManager.CreateAsync(appUser, appUserRegisterDto.Password);
 
-            return identityResult.Succeeded;
+            return identityResult;
         }
     }
 }

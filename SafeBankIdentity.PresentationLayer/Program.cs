@@ -10,12 +10,9 @@ builder.Services.AddDataAccessRegistration(builder.Configuration);
 builder.Services.AddBusinessRegistration();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews(options =>
-{
-    options.Filters.Add<ValidationFilter>();
-})
-    .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<AppUserRegisterDTOValidator>())
-    .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+builder.Services.AddControllersWithViews()
+    .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<AppUserRegisterDTOValidator>());
+
 
 var app = builder.Build();
 
