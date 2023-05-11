@@ -1,14 +1,19 @@
 using FluentValidation.AspNetCore;
 using SafeBankIdentity.BusinessLayer.ValidationRules.AppUserValidationRules;
 using SafeBankIdentity.DataAccessLayer;
+using SafeBankIdentity.PresentationLayer.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDataAccessRegistration(builder.Configuration);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews()
-    .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<AppUserRegisterDTOValidator>());
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<ValidationFilter>();
+})
+    .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<AppUserRegisterDTOValidator>())
+    .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 
 var app = builder.Build();
 
