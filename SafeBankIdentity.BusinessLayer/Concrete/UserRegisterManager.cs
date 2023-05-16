@@ -13,25 +13,32 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
     public class UserRegisterManager : IUserRegisterService
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly IMailService _mailService;
 
-        public UserRegisterManager(UserManager<AppUser> userManager)
-        {
-            _userManager = userManager;
-        }
+		public UserRegisterManager(UserManager<AppUser> userManager, IMailService mailService)
+		{
+			_userManager = userManager;
+			_mailService = mailService;
+		}
 
-        public async Task<IdentityResult> RegisterAsync(AppUserRegisterDto appUserRegisterDto)
+		public async Task<IdentityResult> RegisterAsync(AppUserRegisterDto appUserRegisterDto)
         {
             Random random= new Random();
-            AppUser appUser = new AppUser()
+            int confirmCode = random.Next(100000, 1000000);
+
+			AppUser appUser = new AppUser()
             {
                 UserName = appUserRegisterDto.UserName,
                 Name = appUserRegisterDto.Name,
                 Email = appUserRegisterDto.Email,
                 Surname = appUserRegisterDto.Surname,
-                ConfirmCode = random.Next(100000, 1000000)
-            };
+                ConfirmCode = confirmCode
+			};
 
             IdentityResult identityResult = await _userManager.CreateAsync(appUser, appUserRegisterDto.Password);
+
+            if (identityResult.Succeeded)
+                await _mailService.SendConfirimCodeAsync(appUserRegisterDto, confirmCode);
 
             return identityResult;
         }
