@@ -21,7 +21,19 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
 			_mailService = mailService;
 		}
 
-		public async Task<IdentityResult> RegisterAsync(AppUserRegisterDto appUserRegisterDto)
+        public async Task<bool> ConfirmMailAsync(AppUserConfirmMailDTO appUserConfirmMailDTO) 
+        {
+            AppUser user = await _userManager.FindByEmailAsync(appUserConfirmMailDTO.Email);
+
+            if (user.ConfirmCode == appUserConfirmMailDTO.ConfirmCode)
+            {  
+                return true;
+            }
+                
+            return false;
+        }
+
+        public async Task<IdentityResult> RegisterAsync(AppUserRegisterDto appUserRegisterDto)
         {
             Random random= new Random();
             int confirmCode = random.Next(100000, 1000000);

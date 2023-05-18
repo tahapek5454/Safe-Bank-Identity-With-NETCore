@@ -11,5 +11,6 @@ namespace SafeBankIdentity.BusinessLayer.Abstract
     public interface IUserRegisterService
     {
         Task<IdentityResult> RegisterAsync(AppUserRegisterDto appUserRegisterDto);
+        Task<bool> ConfirmMailAsync(AppUserConfirmMailDTO appUserConfirmMailDTO);
     }
 }

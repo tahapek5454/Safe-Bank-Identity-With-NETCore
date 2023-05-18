@@ -22,7 +22,7 @@ namespace SafeBankIdentity.PresentationLayer.Controllers
 		[HttpGet]
 		public IActionResult Index()
 		{
-			return View();
+            return View();
 		}
 
 		[HttpPost]
@@ -31,9 +31,11 @@ namespace SafeBankIdentity.PresentationLayer.Controllers
             var result =await _userRegisterService.RegisterAsync(appUserRegisterDto);
 
             if(result.Succeeded && ModelState.IsValid)
+            {
+                TempData["Email"] = appUserRegisterDto.Email;
                 return RedirectToAction("Index", "ConfirmMail");
-
-
+            }
+                
             ValidationModelStateFilter.GetErrors(ModelState, result.Errors);
            
 			return View();
