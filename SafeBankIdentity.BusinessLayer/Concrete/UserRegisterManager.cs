@@ -26,7 +26,9 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
             AppUser user = await _userManager.FindByEmailAsync(appUserConfirmMailDTO.Email);
 
             if (user.ConfirmCode == appUserConfirmMailDTO.ConfirmCode)
-            {  
+            {   
+                user.EmailConfirmed= true;
+                await _userManager.UpdateAsync(user);
                 return true;
             }
                 
