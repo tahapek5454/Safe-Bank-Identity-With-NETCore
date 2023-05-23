@@ -33,7 +33,7 @@ namespace SafeBankIdentity.PresentationLayer.Controllers
 			bool isSuccess = await _userRegisterService.ConfirmMailAsync(appUserConfirmMailDTO);
 
 			if (isSuccess)
-				return RedirectToAction("Index", "MyProfile");
+				return RedirectToAction("Index", "Login");
 
 			return View();
 		}

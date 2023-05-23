@@ -17,6 +17,7 @@ namespace SafeBankIdentity.BusinessLayer
             serviceCollection.AddScoped<ICustomerAccountService, CustomerAccountManager>();
             serviceCollection.AddScoped<IUserRegisterService, UserRegisterManager>();
             serviceCollection.AddScoped<IMailService, MailManager>();
+            serviceCollection.AddScoped<IUserLoginService, UserLoginManager>();
         }
     }
 }

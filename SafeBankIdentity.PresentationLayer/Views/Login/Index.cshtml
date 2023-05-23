@@ -1,4 +1,4 @@
-﻿@model AppUserRegisterDto
+﻿@model LoginViewModel
 @{
 	Layout = null;
 }
@@ -9,7 +9,7 @@
 <!-- Head -->
 <head>
 
-	<title>Safe Bank - Yeni Kullanıcı Kaydı</title>
+	<title>Safe Bank - Kullanıcı Girişi</title>
 
 	<!-- Meta-Tags -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,28 +35,24 @@
 	<h1>Safe Bank Kayıt Formu</h1>
 
 	<div class="w3layoutscontaineragileits">
-		<h2>Yeni Müşteri Kaydı</h2>
+		<h2>Hoşgeldiniz</h2>
 		<form method="post">
-			<input type="text" asp-for="Name" placeholder="Adınız" required="">
-			<input type="text" asp-for="Surname" placeholder="Soyadınız" required="">
-			<input type="text" asp-for="UserName" placeholder="Kullanıcı Adınız" required="">
-			<input type="email" asp-for="Email" placeholder="Email Adresiniz" required="">
-			<input type="password" asp-for="Password" placeholder="Şifreniz" required="">
-			<input type="password" asp-for="ConfirmPassword" placeholder="Şifre Tekrarınız" required="">
+			<input type="text" asp-for="appUserLoginDTO.UserNameOrEmail" placeholder="Kullanıcı Adınız veya Emailiniz" required="">
+			<input type="password" asp-for="appUserLoginDTO.Password" placeholder="Şifreniz" required="">
 
 			<br />
-			<div class="text-white" asp-validation-summary="ModelOnly"></div>
+		
 			<br />
 
 			<ul class="agileinfotickwthree">
 				<li>
 					<input type="checkbox" id="brand1" value="">
-					<label for="brand1"><span></span>Kullanıcı Şarlarını Okudum</label>
-					<a href="/Login/Index">Zaten Hesabım Var</a>
+					<label for="brand1"><span></span>Beni Hatırla</label>
+					<a href="/Register/Index">Bir Hesabınız Yok mu ?</a>
 				</li>
 			</ul>
 			<div class="aitssendbuttonw3ls">
-				<input type="submit" value="LOGIN">
+				<input type="submit" value="Giriş Yap">
 				<p> Ana Sayfaya Dön <span>→</span> <a class="w3_play_icon1" href="#small-dialog1"> Safe Bank</a></p>
 				<div class="clear"></div>
 			</div>
