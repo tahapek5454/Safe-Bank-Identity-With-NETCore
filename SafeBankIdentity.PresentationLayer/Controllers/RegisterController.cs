@@ -37,8 +37,9 @@ namespace SafeBankIdentity.PresentationLayer.Controllers
             }
                 
             ValidationModelStateFilter.GetErrors(ModelState, result.Errors);
-           
 			return View();
         }
-    }
+
+	}
+ 
 }

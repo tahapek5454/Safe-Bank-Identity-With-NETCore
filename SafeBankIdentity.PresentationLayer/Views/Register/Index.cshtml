@@ -38,14 +38,32 @@
 		<h2>Yeni Müşteri Kaydı</h2>
 		<form method="post">
 			<input type="text" asp-for="Name" placeholder="Adınız" required="">
+			<br />
+			<span asp-validation-for="Name"></span>
+			<br />
 			<input type="text" asp-for="Surname" placeholder="Soyadınız" required="">
+			<br />
+			<span asp-validation-for="Surname"></span>
+			<br />
 			<input type="text" asp-for="UserName" placeholder="Kullanıcı Adınız" required="">
+			<br />
+			<span asp-validation-for="UserName"></span>
+			<br />
 			<input type="email" asp-for="Email" placeholder="Email Adresiniz" required="">
+			<br />
+			<span asp-validation-for="Email"></span>
+			<br />
 			<input type="password" asp-for="Password" placeholder="Şifreniz" required="">
+			<br />
+			<span asp-validation-for="Password"></span>
+			<br />	
 			<input type="password" asp-for="ConfirmPassword" placeholder="Şifre Tekrarınız" required="">
+			<br />
+			<span asp-validation-for="ConfirmPassword"></span>
+			<br />
 
 			<br />
-			<div class="text-white" asp-validation-summary="ModelOnly"></div>
+			<div class="text-white" asp-validation-summary="All"></div>
 			<br />
 
 			<ul class="agileinfotickwthree">

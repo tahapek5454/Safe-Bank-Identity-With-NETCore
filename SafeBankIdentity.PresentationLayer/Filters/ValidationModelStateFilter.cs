@@ -7,18 +7,19 @@ namespace SafeBankIdentity.PresentationLayer.Filters
 	{
 		public static void GetErrors(ModelStateDictionary modelState, IEnumerable<IdentityError> addedErrors = null) {
 
-			var errors = modelState.Values.SelectMany(v => v.Errors);
+			//var errors = modelState.Values.SelectMany(v => v.Errors);
 
-			foreach (var error in errors)
-			{
-				modelState.AddModelError("", error.ErrorMessage);
-			}
+			//foreach (var error in errors)
+			//{
+			//	modelState.AddModelError("", error.ErrorMessage);
+				
+			//}
 
 			if(addedErrors != null)
 			{
 				foreach (var error in addedErrors)
 				{
-					modelState.AddModelError("", error.Description);
+					modelState.AddModelError("Password", error.Description);
 				}
 			}
 		}
