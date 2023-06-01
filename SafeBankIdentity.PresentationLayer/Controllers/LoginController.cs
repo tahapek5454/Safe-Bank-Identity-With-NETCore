@@ -26,7 +26,7 @@ namespace SafeBankIdentity.PresentationLayer.Controllers
             if (!result)
                 return View();
 
-            return RedirectToAction("Index", "MyProfile");
+            return RedirectToAction("Index", "MyAccounts");
         }
     }
 }
