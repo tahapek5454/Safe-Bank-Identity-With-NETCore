@@ -1,4 +1,5 @@
-﻿using SafeBankIdentity.EntityLayer.Concrete.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using SafeBankIdentity.EntityLayer.Concrete.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace SafeBankIdentity.DataAccessLayer.Abstract
     public interface IGenericDal<T>
         where T : BaseEntity
     {
+        public DbSet<T> Table { get; }
         void Insert(T entity);
         void Update(T entity);
         void Delete(T entity);
