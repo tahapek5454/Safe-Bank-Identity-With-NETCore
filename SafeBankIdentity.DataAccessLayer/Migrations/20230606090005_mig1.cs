@@ -33,9 +33,10 @@ namespace SafeBankIdentity.DataAccessLayer.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Surname = table.Column<string>(type: "text", nullable: false),
-                    District = table.Column<string>(type: "text", nullable: false),
-                    City = table.Column<string>(type: "text", nullable: false),
-                    ImageUrl = table.Column<string>(type: "text", nullable: false),
+                    District = table.Column<string>(type: "text", nullable: true),
+                    City = table.Column<string>(type: "text", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    ConfirmCode = table.Column<int>(type: "integer", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -54,37 +55,6 @@ namespace SafeBankIdentity.DataAccessLayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CustomerAccountProcesses",
-                columns: table => new
-                {
-                    CustomerAccountProcessId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ProcessType = table.Column<string>(type: "text", nullable: false),
-                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
-                    ProcessDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CustomerAccountProcesses", x => x.CustomerAccountProcessId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CustomerAccounts",
-                columns: table => new
-                {
-                    CustomerAccountId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CustomerAccountNumber = table.Column<string>(type: "text", nullable: false),
-                    CustomerAccountCurrency = table.Column<string>(type: "text", nullable: false),
-                    CustomerAccountBalance = table.Column<decimal>(type: "numeric", nullable: false),
-                    BankBranch = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CustomerAccounts", x => x.CustomerAccountId);
                 });
 
             migrationBuilder.CreateTable(
@@ -193,6 +163,58 @@ namespace SafeBankIdentity.DataAccessLayer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CustomerAccounts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CustomerAccountNumber = table.Column<string>(type: "text", nullable: false),
+                    CustomerAccountCurrency = table.Column<string>(type: "text", nullable: false),
+                    CustomerAccountBalance = table.Column<decimal>(type: "numeric", nullable: false),
+                    BankBranch = table.Column<string>(type: "text", nullable: false),
+                    AppUserId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerAccounts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CustomerAccounts_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerAccountProcesses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ProcessType = table.Column<string>(type: "text", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    ProcessDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    SenderCustomerAccountId = table.Column<int>(type: "integer", nullable: false),
+                    ReceiverCustomerAccountId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerAccountProcesses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CustomerAccountProcesses_CustomerAccounts_ReceiverCustomerA~",
+                        column: x => x.ReceiverCustomerAccountId,
+                        principalTable: "CustomerAccounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CustomerAccountProcesses_CustomerAccounts_SenderCustomerAcc~",
+                        column: x => x.SenderCustomerAccountId,
+                        principalTable: "CustomerAccounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -229,6 +251,21 @@ namespace SafeBankIdentity.DataAccessLayer.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerAccountProcesses_ReceiverCustomerAccountId",
+                table: "CustomerAccountProcesses",
+                column: "ReceiverCustomerAccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerAccountProcesses_SenderCustomerAccountId",
+                table: "CustomerAccountProcesses",
+                column: "SenderCustomerAccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerAccounts_AppUserId",
+                table: "CustomerAccounts",
+                column: "AppUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -252,10 +289,10 @@ namespace SafeBankIdentity.DataAccessLayer.Migrations
                 name: "CustomerAccountProcesses");
 
             migrationBuilder.DropTable(
-                name: "CustomerAccounts");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "CustomerAccounts");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

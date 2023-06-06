@@ -292,7 +292,17 @@ namespace SafeBankIdentity.DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("ReceiverCustomerAccountId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SenderCustomerAccountId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ReceiverCustomerAccountId");
+
+                    b.HasIndex("SenderCustomerAccountId");
 
                     b.ToTable("CustomerAccountProcesses");
                 });
@@ -359,9 +369,35 @@ namespace SafeBankIdentity.DataAccessLayer.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("SafeBankIdentity.EntityLayer.Concrete.CustomerAccountProcess", b =>
+                {
+                    b.HasOne("SafeBankIdentity.EntityLayer.Concrete.CustomerAccount", "ReceiverCustomreAccount")
+                        .WithMany("ReceiverCustomerAccountProcesses")
+                        .HasForeignKey("ReceiverCustomerAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SafeBankIdentity.EntityLayer.Concrete.CustomerAccount", "SenderCustomerAccount")
+                        .WithMany("SenderCustomerAccountProcesses")
+                        .HasForeignKey("SenderCustomerAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ReceiverCustomreAccount");
+
+                    b.Navigation("SenderCustomerAccount");
+                });
+
             modelBuilder.Entity("SafeBankIdentity.EntityLayer.Concrete.AppUser", b =>
                 {
                     b.Navigation("CustomerAccounts");
+                });
+
+            modelBuilder.Entity("SafeBankIdentity.EntityLayer.Concrete.CustomerAccount", b =>
+                {
+                    b.Navigation("ReceiverCustomerAccountProcesses");
+
+                    b.Navigation("SenderCustomerAccountProcesses");
                 });
 #pragma warning restore 612, 618
         }

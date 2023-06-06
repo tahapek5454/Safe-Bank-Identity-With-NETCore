@@ -13,5 +13,10 @@ namespace SafeBankIdentity.EntityLayer.Concrete
         public decimal Amount { get; set; }
         public DateTime ProcessDate { get; set; }
 
+        public int SenderCustomerAccountId { get; set; }
+        public int ReceiverCustomerAccountId { get; set; }
+        public CustomerAccount SenderCustomerAccount { get; set; }
+        public CustomerAccount ReceiverCustomreAccount { get; set; }
+
     }
 }

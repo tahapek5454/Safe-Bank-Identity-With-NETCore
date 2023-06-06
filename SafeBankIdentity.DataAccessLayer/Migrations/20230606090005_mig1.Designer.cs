@@ -12,8 +12,8 @@ using SafeBankIdentity.DataAccessLayer.Concrete;
 namespace SafeBankIdentity.DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230511070602_mig3")]
-    partial class mig3
+    [Migration("20230606090005_mig1")]
+    partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -168,15 +168,16 @@ namespace SafeBankIdentity.DataAccessLayer.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
+                    b.Property<int?>("ConfirmCode")
+                        .HasColumnType("integer");
+
                     b.Property<string>("District")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
@@ -187,7 +188,6 @@ namespace SafeBankIdentity.DataAccessLayer.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
@@ -294,7 +294,17 @@ namespace SafeBankIdentity.DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("ReceiverCustomerAccountId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SenderCustomerAccountId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ReceiverCustomerAccountId");
+
+                    b.HasIndex("SenderCustomerAccountId");
 
                     b.ToTable("CustomerAccountProcesses");
                 });
@@ -361,9 +371,35 @@ namespace SafeBankIdentity.DataAccessLayer.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("SafeBankIdentity.EntityLayer.Concrete.CustomerAccountProcess", b =>
+                {
+                    b.HasOne("SafeBankIdentity.EntityLayer.Concrete.CustomerAccount", "ReceiverCustomreAccount")
+                        .WithMany("ReceiverCustomerAccountProcesses")
+                        .HasForeignKey("ReceiverCustomerAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SafeBankIdentity.EntityLayer.Concrete.CustomerAccount", "SenderCustomerAccount")
+                        .WithMany("SenderCustomerAccountProcesses")
+                        .HasForeignKey("SenderCustomerAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ReceiverCustomreAccount");
+
+                    b.Navigation("SenderCustomerAccount");
+                });
+
             modelBuilder.Entity("SafeBankIdentity.EntityLayer.Concrete.AppUser", b =>
                 {
                     b.Navigation("CustomerAccounts");
+                });
+
+            modelBuilder.Entity("SafeBankIdentity.EntityLayer.Concrete.CustomerAccount", b =>
+                {
+                    b.Navigation("ReceiverCustomerAccountProcesses");
+
+                    b.Navigation("SenderCustomerAccountProcesses");
                 });
 #pragma warning restore 612, 618
         }
