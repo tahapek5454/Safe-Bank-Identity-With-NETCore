@@ -10,7 +10,7 @@ namespace SafeBankIdentity.BusinessLayer.Abstract
 {
     public interface ICustomUserService
     {
-        Task EditUserAsync(AppUserEditDto appUserEditDto, string userName);
+        Task<bool> EditUserAsync(AppUserEditDto appUserEditDto, string userName);
         Task<AppUser> GetUserByUserNameAsync(string userName);
     }
 }

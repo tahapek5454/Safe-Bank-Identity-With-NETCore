@@ -34,5 +34,16 @@ namespace SafeBankIdentity.PresentationLayer.Controllers
             
             return View(appUserEditDto);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(AppUserEditDto appUserEditDto)
+        {
+            bool succees = await _customUserService.EditUserAsync(appUserEditDto, User.Identity.Name);
+
+            if (succees)
+                return RedirectToAction("Index", "Login");
+
+            return View();
+        }
     }
 }
