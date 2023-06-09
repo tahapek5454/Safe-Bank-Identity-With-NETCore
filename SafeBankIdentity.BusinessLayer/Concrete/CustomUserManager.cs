@@ -19,7 +19,7 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
             _userManager = userManager;
         }
 
-        public async Task<bool> EditUserAsync(AppUserEditDto appUserEditDto, string userName)
+        public async Task<IdentityResult> EditUserAsync(AppUserEditDto appUserEditDto, string userName)
         {
            AppUser user = await _userManager.FindByNameAsync(userName);
 
@@ -43,7 +43,7 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
 
             IdentityResult result = await _userManager.UpdateAsync(user);
 
-            return result.Succeeded;
+            return result;
 
         }
 

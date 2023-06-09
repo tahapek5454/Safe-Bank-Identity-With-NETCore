@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SafeBankIdentity.BusinessLayer.Abstract;
 using SafeBankIdentity.DtoLayer.Dtos.AppUserDtos;
 using SafeBankIdentity.EntityLayer.Concrete;
+using SafeBankIdentity.PresentationLayer.Filters;
 
 namespace SafeBankIdentity.PresentationLayer.Controllers
 {
@@ -38,10 +40,17 @@ namespace SafeBankIdentity.PresentationLayer.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(AppUserEditDto appUserEditDto)
         {
-            bool succees = await _customUserService.EditUserAsync(appUserEditDto, User.Identity.Name);
+            IdentityResult result = null;
 
-            if (succees)
-                return RedirectToAction("Index", "Login");
+            if (ModelState.IsValid)
+            {
+                result = await _customUserService.EditUserAsync(appUserEditDto, User.Identity.Name);
+
+                if (result.Succeeded)
+                    return RedirectToAction("Index", "Login");
+            }
+
+            ValidationModelStateFilter.GetErrors(ModelState, result?.Errors);
 
             return View();
         }

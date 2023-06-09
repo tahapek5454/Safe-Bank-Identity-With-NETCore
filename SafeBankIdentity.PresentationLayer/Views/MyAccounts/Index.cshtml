@@ -66,6 +66,8 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input id="name" class="form-control col-md-7 col-xs-12" asp-for="Name"  required="required" type="text">
                                 </div>
+                                <br />
+                                <span style="color : red;" asp-validation-for="Name"></span>
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
@@ -74,6 +76,8 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" id="email2" asp-for="Surname" data-validate-linked="email" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
+                                <br />
+                                <span style="color : red;" asp-validation-for="Surname"></span>
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
@@ -82,6 +86,8 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="email" id="email" asp-for="Email" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
+                                <br />
+                                <span style="color : red;" asp-validation-for="Email"></span>
                             </div>
                            
                             <div class="item form-group">
@@ -123,6 +129,12 @@
                                     <input id="password2" type="password" asp-for="RePassword" data-validate-linked="password" class="form-control col-md-7 col-xs-12" required="required">
                                 </div>
                             </div>
+
+
+                            <br />
+                                <div class="text-white" asp-validation-summary="All"></div>
+                            <br />
+
                           
                             <div class="ln_solid"></div>
                             <div class="form-group">

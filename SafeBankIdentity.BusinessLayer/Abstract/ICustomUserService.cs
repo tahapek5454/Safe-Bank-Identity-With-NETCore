@@ -1,4 +1,5 @@
-﻿using SafeBankIdentity.DtoLayer.Dtos.AppUserDtos;
+﻿using Microsoft.AspNetCore.Identity;
+using SafeBankIdentity.DtoLayer.Dtos.AppUserDtos;
 using SafeBankIdentity.EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace SafeBankIdentity.BusinessLayer.Abstract
 {
     public interface ICustomUserService
     {
-        Task<bool> EditUserAsync(AppUserEditDto appUserEditDto, string userName);
+        Task<IdentityResult> EditUserAsync(AppUserEditDto appUserEditDto, string userName);
         Task<AppUser> GetUserByUserNameAsync(string userName);
     }
 }
