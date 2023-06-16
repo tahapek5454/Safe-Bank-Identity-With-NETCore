@@ -9,6 +9,6 @@ namespace SafeBankIdentity.BusinessLayer.Abstract
 {
     public interface IMoneyTransferService
     {
-        Task SendMoneyToAccoutAsync(SendMoneyForCustomerAccountProcessDto sendMoneyForCustomerAccountProcessDto, string userName);
+        Task SendMoneyToAccoutAsync(SendMoneyForCustomerAccountProcessDto sendMoneyForCustomerAccountProcessDto, string userName, string currency);
     }
 }

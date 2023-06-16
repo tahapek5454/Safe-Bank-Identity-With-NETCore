@@ -17,6 +17,7 @@ namespace SafeBankIdentity.EntityLayer.Concrete
         public int ReceiverCustomerAccountId { get; set; }
         public CustomerAccount SenderCustomerAccount { get; set; }
         public CustomerAccount ReceiverCustomreAccount { get; set; }
+        public string? Description { get; set; }
 
     }
 }

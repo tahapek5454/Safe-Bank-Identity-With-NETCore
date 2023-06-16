@@ -15,8 +15,11 @@ namespace SafeBankIdentity.PresentationLayer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string mycurrency)
         {
+            ViewBag.currency = mycurrency;
+            TempData["mycurrency"] = mycurrency;
+
             return View();
         }
 
@@ -24,7 +27,7 @@ namespace SafeBankIdentity.PresentationLayer.Controllers
         public async Task<IActionResult> Index(SendMoneyForCustomerAccountProcessDto sendMoneyForCustomerAccountProcessDto)
         {
 
-            await _moneyTransferService.SendMoneyToAccoutAsync(sendMoneyForCustomerAccountProcessDto, User.Identity.Name);
+            await _moneyTransferService.SendMoneyToAccoutAsync(sendMoneyForCustomerAccountProcessDto, User.Identity.Name, TempData["mycurrency"].ToString());
 
             return RedirectToAction("Index", "Deneme");
         }

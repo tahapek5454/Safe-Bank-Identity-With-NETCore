@@ -23,7 +23,7 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
             _customerAccountDal = customerAccountDal;
         }
 
-        public async Task SendMoneyToAccoutAsync(SendMoneyForCustomerAccountProcessDto sendMoneyForCustomerAccountProcessDto, string userName)
+        public async Task SendMoneyToAccoutAsync(SendMoneyForCustomerAccountProcessDto sendMoneyForCustomerAccountProcessDto, string userName, string currency)
         {
             AppUser baseUser = await _customUserService.GetUserByUserNameAsync(userName);
 
@@ -33,11 +33,11 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
 
             CustomerAccount? baseCustomerAccount = await _customerAccountDal
                 .Table
-                .Where(ca => ca.AppUserId == baseUser.Id && ca.CustomerAccountNumber.Equals(sendMoneyForCustomerAccountProcessDto.SenderCustomerAccountNumber))
+                .Where(ca => ca.AppUserId == baseUser.Id && ca.CustomerAccountCurrency.Equals(currency))
                 .FirstOrDefaultAsync();
 
             if (baseCustomerAccount == null)
-                throw new Exception("Kullanıcının Belirtilen Hesabı Bulunamadı.");
+                throw new Exception("Kullanıcının İlgili Hesabı Bulunamadı.");
 
 
             CustomerAccount? targetCustomerAccount = await _customerAccountDal
@@ -58,7 +58,8 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
                 ReceiverCustomreAccount = targetCustomerAccount,
                 SenderCustomerAccount = baseCustomerAccount,
                 ProcessType = "Havale",
-                ProcessDate = DateTime.UtcNow
+                ProcessDate = DateTime.UtcNow,
+                Description = sendMoneyForCustomerAccountProcessDto.Description,
             });
 
 

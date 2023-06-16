@@ -9,8 +9,8 @@ namespace SafeBankIdentity.DtoLayer.Dtos.CustomerAccountProcessDtos
     public class SendMoneyForCustomerAccountProcessDto
     {
         public decimal Amount { get; set; }
-        public string SenderCustomerAccountNumber { get; set; }
         public string ReceiverCustomerAccountNumber { get; set; }
+        public string? Description { get; set; }
 
     }
 }
