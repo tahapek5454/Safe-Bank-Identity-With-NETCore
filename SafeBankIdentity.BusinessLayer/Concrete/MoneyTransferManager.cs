@@ -23,7 +23,7 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
             _customerAccountDal = customerAccountDal;
         }
 
-        public async Task SendMoneyToAccoutAsync(SendMoneyForCustomerAccountProcessDto sendMoneyForCustomerAccountProcessDto, string userName, string currency)
+        public async Task<bool> SendMoneyToAccoutAsync(SendMoneyForCustomerAccountProcessDto sendMoneyForCustomerAccountProcessDto, string userName, string currency)
         {
             AppUser baseUser = await _customUserService.GetUserByUserNameAsync(userName);
 
@@ -42,11 +42,12 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
 
             CustomerAccount? targetCustomerAccount = await _customerAccountDal
                 .Table
-                .Where(ca => ca.CustomerAccountNumber.Equals(sendMoneyForCustomerAccountProcessDto.ReceiverCustomerAccountNumber))
+                .Where(ca => ca.CustomerAccountNumber.Equals(sendMoneyForCustomerAccountProcessDto.ReceiverCustomerAccountNumber) && ca.CustomerAccountCurrency.Equals(currency))
                 .FirstOrDefaultAsync();
 
             if (targetCustomerAccount == null)
-                throw new Exception("Hedef Hesap Bulunamadı.");
+                return false;
+                //throw new Exception("Hedef Hesap Bulunamadı.");
 
 
             targetCustomerAccount.CustomerAccountBalance += sendMoneyForCustomerAccountProcessDto.Amount;
@@ -64,6 +65,8 @@ namespace SafeBankIdentity.BusinessLayer.Concrete
 
 
             await _customerAccountDal.SaveAsync();
+
+            return true;
 
         }
     }

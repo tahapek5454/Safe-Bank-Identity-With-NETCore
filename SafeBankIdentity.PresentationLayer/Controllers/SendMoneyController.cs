@@ -20,15 +20,18 @@ namespace SafeBankIdentity.PresentationLayer.Controllers
             ViewBag.currency = mycurrency;
             TempData["mycurrency"] = mycurrency;
 
-            return View();
+            
+            return View(new SendMoneyForCustomerAccountProcessDto());
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(SendMoneyForCustomerAccountProcessDto sendMoneyForCustomerAccountProcessDto)
         {
 
-            await _moneyTransferService.SendMoneyToAccoutAsync(sendMoneyForCustomerAccountProcessDto, User.Identity.Name, TempData["mycurrency"].ToString());
-
+            bool success = await _moneyTransferService.SendMoneyToAccoutAsync(sendMoneyForCustomerAccountProcessDto, User.Identity.Name, TempData["mycurrency"].ToString());
+            sendMoneyForCustomerAccountProcessDto.Success = success;
+            if(!success)
+                return View(sendMoneyForCustomerAccountProcessDto);
             return RedirectToAction("Index", "Deneme");
         }
     }

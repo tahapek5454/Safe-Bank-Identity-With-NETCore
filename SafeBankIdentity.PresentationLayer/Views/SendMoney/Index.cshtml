@@ -91,12 +91,29 @@
                                     <button type="submit" class="btn btn-primary">Vazgeç</button>
                                     <button id="send" type="submit" class="btn btn-success">Para Gönder</button>
                                 </div>
-                            </div>
+                            </div>                        
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+  
+    @if (Model.Success.HasValue && Model.Success.Value == false)
+    {
+        
+            <div style="padding: 15px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            color: #ffff;
+            background-color: #FF7469;
+            border-color: #FF7469;">
+                İşlem Gerçekleştirilemedi !
+            </div>
+        
+       
+    }
+
 </div>
 

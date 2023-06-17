@@ -11,6 +11,7 @@ namespace SafeBankIdentity.DtoLayer.Dtos.CustomerAccountProcessDtos
         public decimal Amount { get; set; }
         public string ReceiverCustomerAccountNumber { get; set; }
         public string? Description { get; set; }
+        public bool? Success { get; set; }
 
     }
 }
