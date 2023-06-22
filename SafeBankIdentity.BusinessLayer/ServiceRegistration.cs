@@ -20,6 +20,7 @@ namespace SafeBankIdentity.BusinessLayer
             serviceCollection.AddScoped<IUserLoginService, UserLoginManager>();
             serviceCollection.AddScoped<ICustomUserService, CustomUserManager>();
             serviceCollection.AddScoped<IMoneyTransferService, MoneyTransferManager>();
+            serviceCollection.AddScoped<ICurrencyService, CurrencyManager>();
         }
     }
 }
