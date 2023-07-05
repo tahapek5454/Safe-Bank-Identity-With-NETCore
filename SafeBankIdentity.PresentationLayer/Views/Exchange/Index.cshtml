@@ -1,51 +1,69 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/CustomerLayout/Index.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="">
-            <div class="x_content">
-                <div class="row">
-                    <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <div class="tile-stats">
-                            <div class="icon">
-                                <i class="fa fa-caret-square-o-right"></i>
-                            </div>
-                            <div class="count">@ViewBag.USDtoTRY</div>
 
-                            <h3>USD-TRY</h3>
-                            <p>Safe Bank.</p>
-                        </div>
-                    </div>
-                    <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <div class="tile-stats">
-                            <div class="icon">
-                                <i class="fa fa-comments-o"></i>
-                            </div>
-                            <div class="count">@ViewBag.EURtoTRY</div>
 
-                            <h3>EUR-TRY</h3>
-                            <p>Safe Bank.</p>
-                        </div>
-                    </div>
-                    <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <div class="tile-stats">
-                            <div class="icon">
-                                <i class="fa fa-sort-amount-desc"></i>
-                            </div>
-                            <div class="count">@ViewBag.GBPtoTRY</div>
-
-                            <h3>GBP-TRY</h3>
-                            <p>Safe Bank.</p>
-                        </div>
-                    </div>
-                    </div>
-                </div>       
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>@DateTime.UtcNow.Day/@DateTime.UtcNow.Month/@DateTime.UtcNow.Year Güncel Döviz Kuru</h3>
             </div>
         </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                <div class="tile-stats">
+                                    <div class="icon">
+                                        <i class="fa fa-caret-square-o-right"></i>
+                                    </div>
+                                    <div class="count">@ViewBag.USDtoTRY</div>
+
+                                    <h3>USD-TRY</h3>
+                                    <p>Safe Bank.</p>
+                                </div>
+                            </div>
+                            <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                <div class="tile-stats">
+                                    <div class="icon">
+                                        <i class="fa fa-comments-o"></i>
+                                    </div>
+                                    <div class="count">@ViewBag.EURtoTRY</div>
+
+                                    <h3>EUR-TRY</h3>
+                                    <p>Safe Bank.</p>
+                                </div>
+                            </div>
+                            <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                <div class="tile-stats">
+                                    <div class="icon">
+                                        <i class="fa fa-sort-amount-desc"></i>
+                                    </div>
+                                    <div class="count">@ViewBag.GBPtoTRY</div>
+
+                                    <h3>GBP-TRY</h3>
+                                    <p>Safe Bank.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
     </div>
 </div>
-
